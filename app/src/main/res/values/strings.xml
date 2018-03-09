@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">book</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="username">用户名</string>
+    <string name="title_map">附近回收点</string>
+    <string name="title_scanning">扫一扫</string>
+    <string name="title_account">个人中心</string>
+
+    <string name="machine_code">机器码</string>
+    <string name="user">用户</string>
+    <string name="book_name">书籍名称</string>
+    <string name="community_contri">社区贡献</string>
+    <string name="setting">设置</string>
+
+    <string name="input_m_code">手动输入机器码</string>
+    <string name="flashlight">手电筒</string>
+
+    <string name="scanning_info">对准机器上的二维码，即可自动扫描</string>
+    <string name="user_page_info">这个人很懒，什么都没有留下。</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_settings">Hello blank fragment</string>
+
+
+    <!-- 设置界面信息 -->
+    <!-- PreferenceKey -->
+    <string name="pref_key_base_settings">pref_key_base_settings</string>
+    <string name="pref_key_netmode_settings">pref_key_netmode_settings</string>
+    <string name="pref_key_autodownload_settings">pref_key_autodownload_settings</string>
+    <string name="pref_key_clearcache_settings">pref_key_clearcache_settings</string>
+    <string name="pref_key_account_settings">pref_key_account_settings</string>
+    <string name="pref_key_accountsafe_settings">pref_key_accountsafe_settings</string>
+    <string name="pref_key_abouthelp_settings">pref_key_abouthelp_settings</string>
+    <string name="pref_key_suggest_settings">pref_key_suggest_settings</string>
+    <string name="pref_key_opensource_settings">pref_key_opensource_settings</string>
+    <string name="pref_key_checkipdate_settings">pref_key_checkipdate_settings</string>
+    <string name="pref_key_deal_settings">pref_key_deal_settings</string>
+    <string name="pref_key_connect_settings">pref_key_connect_settings</string>
+    <string name="pref_key_logout_settings">pref_key_logout_settings</string>
+    <!-- title -->
+    <string name="pref_title_base_settings">基本设置</string>
+    <string name="pref_title_netmode_settings">省流量模式</string>
+    <string name="pref_title_autodownload_settings">自动下载更新</string>
+    <string name="pref_title_clearcache_settings">清除缓存</string>
+    <string name="pref_title_account_settings">帐号设置</string>
+    <string name="pref_title_accountsafe_settings">帐号与安全</string>
+    <string name="pref_title_abouthelp_settings">关于与帮助</string>
+    <string name="pref_title_suggest_settings">意见反馈</string>
+    <string name="pref_title_opensource_settings">开源许可</string>
+    <string name="pref_title_checkipdate_settings">检查更新</string>
+    <string name="pref_title_deal_settings">回收协议</string>
+    <string name="pref_title_connect_settings">联系我们</string>
+    <string name="pref_title_logout_settings">退出帐号</string>
+    <!-- summary -->
+    <string name="pref_summary_netmode_settings">仅Wi-Fi环境下才会自动加载图片</string>
+    <string name="pref_summary_autodownload_settings">仅Wi-Fi环境下会自动下载</string>
+    <string name="pref_summary_clearcache_settings">包括图片、音频和视频缓存</string>
+    <string name="pref_summary_accountsafe_settings">管理帐号安全，修改帐号密码等</string>
+    <string name="pref_summary_checkipdate_settings">当前版本</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
