@@ -23,16 +23,10 @@ public class BookApplication extends Application {
 
     }
 
-    public static BookApplication newInstance() {
-        if (bookApplication == null) {
-            bookApplication = new BookApplication();
-        }
-        return bookApplication;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
+        bookApplication = this;
         /*
         * 配置logger日志组件
         * */
