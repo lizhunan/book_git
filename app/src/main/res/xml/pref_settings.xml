@@ -50,7 +50,7 @@
             android:key="@string/pref_key_connect_settings"
             android:title="@string/pref_title_connect_settings" />
         <Preference
-            android:key="@string/pref_title_autodownload_settings"
+            android:key="@string/pref_key_logout_settings"
             android:title="@string/pref_title_logout_settings" />
     </PreferenceCategory>
 </PreferenceScreen>
