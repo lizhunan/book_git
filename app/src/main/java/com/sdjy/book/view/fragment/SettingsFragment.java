@@ -20,7 +20,7 @@ import com.sdjy.book.R;
 public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener,
         Preference.OnPreferenceChangeListener  {
 
-
+    private Preference preference;
     public SettingsFragment() {
 
     }
@@ -29,6 +29,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_settings);
+        preference = this.findPreference("pref_key_logout_settings");
+        preference.setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -38,6 +40,9 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
+        if("pref_key_logout_settings".equals(preference.getKey())){
+            Logger.d("dd","ddd");
+        }
         return false;
     }
 }
