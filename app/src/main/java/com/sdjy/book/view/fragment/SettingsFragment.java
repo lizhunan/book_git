@@ -17,7 +17,8 @@ import com.sdjy.book.R;
 /**
  * 设置fragment
  */
-public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener,
+        Preference.OnPreferenceChangeListener  {
 
 
     public SettingsFragment() {
@@ -31,28 +32,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-//        findPreference()
+    public boolean onPreferenceChange(Preference preference, Object o) {
+        return false;
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    Preference preference;
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        Logger.e("onResume", s);
-        switch (s) {
-            case "pref_key_logout_settings":
-                Logger.e("onResume", s);
-                preference = findPreference(s);
-                break;
-        }
+    public boolean onPreferenceClick(Preference preference) {
+        return false;
     }
 }
