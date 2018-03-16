@@ -2,12 +2,17 @@ package com.sdjy.book.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.BuildConfig;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.sdjy.book.mvp.http.FastHttp;
+import com.sdjy.book.receiver.NetWorkStateReceiver;
 
 
 /**
@@ -42,6 +47,11 @@ public class BookApplication extends Application {
                 return BuildConfig.DEBUG;
             }
         });
+        registerNetWorkListener();
+        /*
+        * 绑定服务器地址
+        * */
+        FastHttp.bindServer(Constant.HOST);
     }
 
     /**
@@ -51,5 +61,17 @@ public class BookApplication extends Application {
      */
     public static Context getContext() {
         return bookApplication.getApplicationContext();
+    }
+
+    /**
+     * 注册网络监听
+     */
+    private void registerNetWorkListener() {
+        NetWorkStateReceiver mReceiver = new NetWorkStateReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(mReceiver, filter);
     }
 }

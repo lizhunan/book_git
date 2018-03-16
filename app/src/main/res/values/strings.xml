@@ -2,22 +2,33 @@
     <string name="app_name">book</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="phone_selectable">手机号（可选）</string>
     <string name="title_map">附近回收点</string>
     <string name="title_scanning">扫一扫</string>
     <string name="title_account">个人中心</string>
-
     <string name="machine_code">机器码</string>
     <string name="user">用户</string>
     <string name="book_name">书籍名称</string>
     <string name="community_contri">社区贡献</string>
     <string name="setting">设置</string>
-
     <string name="input_m_code">手动输入机器码</string>
     <string name="flashlight">手电筒</string>
-
     <string name="scanning_info">对准机器上的二维码，即可自动扫描</string>
     <string name="user_page_info">这个人很懒，什么都没有留下。</string>
-
+    <string name="please_input_phone">请输入手机号码</string>
+    <string name="please_input_CAPTCHA">请输入验证码</string>
+    <string name="please_input_username">请输入用户名</string>
+    <string name="please_input_password">请输入密码</string>
+    <string name="CAPTCHA">验证码</string>
+    <string name="I_read_agree"><u>我已阅读，并同意</u></string>
+    <string name="protocol"><u>《用户协议》</u></string>
+    <string name="login">登录</string>
+    <string name="phone_login">手机号验证并登录</string>
+    <string name="register">注册</string>
+    <string name="qq_login">QQ登录</string>
+    <string name="wx_login">微信登录</string>
+    <string name="forget_pwd"><u>忘记密码?</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_settings">Hello blank fragment</string>
 

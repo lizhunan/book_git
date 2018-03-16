@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         mContextView = inflater.inflate(bindLayout(), container, false);
         initView(mContextView);
         setListener();
-        doBusiness(getContext(),getActivity());
+        doBusiness(getContext(), getActivity());
         return mContextView;
     }
 
@@ -87,7 +88,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public <T extends View> T $(View view, int resId) {
         return (T) view.findViewById(resId);
     }
-
 
     /**
      * 防止过快点击
