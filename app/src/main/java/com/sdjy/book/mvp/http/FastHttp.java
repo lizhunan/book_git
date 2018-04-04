@@ -24,7 +24,12 @@ public class FastHttp {
      * @param port 服务器端口
      */
     public static void bindServer(String host, int port) {
-        ADDRESS = port == -1 ? host + "" + port : host;
+        Log.d("bindServer", "port:" + port);
+        if (!host.endsWith("/")) {
+            host = host + ":" + port;
+            ADDRESS = host + "/";
+        }
+        Log.d("bindServer", ADDRESS);
     }
 
     /**
@@ -34,9 +39,8 @@ public class FastHttp {
      */
     public static void bindServer(String host) {
         if (!host.endsWith("/")) {
-            host = host + "/";
+            ADDRESS = host + "/";
         }
-        bindServer(host, 80);
     }
 
     /**

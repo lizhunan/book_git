@@ -142,7 +142,7 @@ public class HttpMothed {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 
-                .baseUrl("http://192.168.43.190:8080/user/")
+                .baseUrl(URL)
                 .build();
         baseAPI = retrofit.create(BaseAPI.class);
     }
@@ -208,19 +208,29 @@ public class HttpMothed {
      * @param onSubscriberListener 回调
      */
     public void POST(BaseEnetity entity, Context context, OnSubscriberListener onSubscriberListener) {
-        baseAPI._POST(entity.getRuqestURL(), fiterURLFromRequestParams(entity.getMapEnticty()))
+        baseAPI
+                ._POST(entity.getRuqestURL(), fiterURLFromRequestParams(entity.getMapEnticty()))
                 .compose(schedulersTransformer)
                 .subscribe(new Subscriber(onSubscriberListener, context));
     }
 
-    public void POST_JSON(BaseEnetity enetity,Context context,OnSubscriberListener onSubscriberListener){
+    /**
+     * POST提交JSON
+     *
+     * @param enetity              继承与BaseEntity的实体类
+     * @param context              上下文对象
+     * @param onSubscriberListener 回调
+     */
+    public void POST_JSON(BaseEnetity enetity, Context context, OnSubscriberListener onSubscriberListener) {
         String json = JsonParseUtil.modeToJson(enetity);
+        Log.d("Post_json", "json:" + json);
         RequestBody body = RequestBody.create(jsonMediaType, fiterURLFromJSON(json));
         baseAPI
                 ._POST_JSON(enetity.getRuqestURL(), body)
                 .compose(schedulersTransformer)
                 .subscribe(new Subscriber(onSubscriberListener, context));
     }
+
 
     /**
      * GET请求

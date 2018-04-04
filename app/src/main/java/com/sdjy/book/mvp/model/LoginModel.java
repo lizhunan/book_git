@@ -3,11 +3,10 @@ package com.sdjy.book.mvp.model;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sdjy.book.R;
 import com.sdjy.book.mvp.entity.User;
-import com.sdjy.book.mvp.entity.net.RegisterEnetity;
+import com.sdjy.book.mvp.entity.net.LoginEnetity;
 import com.sdjy.book.mvp.http.FastHttp;
 import com.sdjy.book.mvp.http.OnSubscriberListener;
 import com.sdjy.book.mvp.http.base.HttpType;
@@ -18,24 +17,22 @@ import com.sdjy.book.util.JsonParseUtil;
 import java.lang.reflect.Type;
 
 /**
- * Created by 李竹楠 on 2018/3/16.
- * 注册model
+ * Created by 李竹楠 on 2018/3/22.
+ * 普通方法登录model
  */
 
-public class RegisterModel {
+public class LoginModel {
 
-    public void regist(final IBase<ResponseHttp<User>> iBase, final Context context, String username, String password, String phone) {
+    public void login(final IBase<ResponseHttp<User>> iBase, final Context context, final String username, String password) {
         iBase.onLoading(0);
-        FastHttp.SEND(HttpType.POST, context, new RegisterEnetity(username, password, phone), new OnSubscriberListener() {
+        FastHttp.SEND(HttpType.POST, context, new LoginEnetity(username, password), new OnSubscriberListener() {
             @Override
             public void onCompleted() {
-                Log.d("sss", "onCompleted");
                 iBase.onLoaded();
             }
 
             @Override
             public void onStart() {
-                Log.d("sss", "onStart");
             }
 
             @Override
@@ -48,7 +45,6 @@ public class RegisterModel {
 
             @Override
             public void onFault(String s) {
-                Log.d("sss", "onFault");
                 iBase.onFailed(context.getString(R.string.net_error));
             }
         });

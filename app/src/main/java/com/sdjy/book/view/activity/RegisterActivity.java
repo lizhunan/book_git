@@ -1,27 +1,37 @@
 package com.sdjy.book.view.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.sdjy.book.R;
 import com.sdjy.book.app.BaseActivity;
 import com.sdjy.book.app.BookApplication;
-import com.sdjy.book.mvp.entity.net.Login;
+import com.sdjy.book.app.Constant;
+import com.sdjy.book.mvp.entity.User;
 import com.sdjy.book.mvp.presenter.impl.RegisterPresenter;
 import com.sdjy.book.view.IRefresh;
 
-public class RegisterActivity extends BaseActivity implements IRefresh<String> {
+public class RegisterActivity extends BaseActivity implements IRefresh<User> {
 
     private EditText usernameEt;
     private EditText passwordEt;
     private EditText phoneEt;
     private Button registerBan;
     private ImageView profileIv;
+    private ProgressBar progressBar;
+    private ConstraintLayout content;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private RegisterPresenter registerPresenter = new RegisterPresenter(this);
 
     @Override
@@ -42,11 +52,14 @@ public class RegisterActivity extends BaseActivity implements IRefresh<String> {
         phoneEt = $(R.id.phone_et);
         registerBan = $(R.id.register_btn);
         profileIv = $(R.id.profile_civ);
+        progressBar = $(R.id.progressBar);
+        content = $(R.id.content);
     }
 
     @Override
     protected void doBusiness(Context mContext) {
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(BookApplication.getContext());
+        editor = sharedPreferences.edit();
     }
 
     @Override
@@ -68,22 +81,30 @@ public class RegisterActivity extends BaseActivity implements IRefresh<String> {
     }
 
     @Override
-    public void onSuccess(String s) {
-        Log.d("onsuccess", "ss:" + s);
+    public void onSuccess(User user) {
+        editor.putString(Constant.USERNAME, user.getName());
+        editor.putString(Constant.PASSWORD, user.getPswd());
+        editor.putString(Constant.PHONE, user.getPhone());
+        editor.putString(Constant.QQ, user.getQqid());
+        editor.putString(Constant.WX, user.getWxid());
+        editor.putString(Constant.TOKEN, user.getToken());
+        editor.commit();
+        startActivity(MainActivity.class);
+        finish();
     }
 
     @Override
     public void onFiled(String s) {
-
+        Snackbar.make(content, s, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void onLoading(int process) {
-
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onLoaded() {
-
+        progressBar.setVisibility(View.GONE);
     }
 }

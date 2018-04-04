@@ -1,14 +1,19 @@
 package com.sdjy.book.mvp.serivce;
 
+import com.sdjy.book.mvp.entity.net.RegisterEnetity;
 import com.sdjy.book.mvp.http.HttpResult;
+import com.sdjy.book.mvp.http.base.BaseEnetity;
+import com.sdjy.book.mvp.model.RegisterModel;
 
 import java.util.Map;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
@@ -52,6 +57,7 @@ public interface BaseAPI {
      * @param route 请求体
      * @return 观察者泛型
      */
+    @Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("{path}")
     Observable<ResponseBody> _POST_JSON(
             @Path(value = "path", encoded = true) String path,
@@ -68,4 +74,5 @@ public interface BaseAPI {
     Observable<ResponseBody> _GET_JSON(
             @Path(value = "path", encoded = true) String path,
             @Body RequestBody route);
+
 }

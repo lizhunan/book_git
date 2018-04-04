@@ -51,7 +51,7 @@ public class BookApplication extends Application {
         /*
         * 绑定服务器地址
         * */
-        FastHttp.bindServer(Constant.HOST);
+        FastHttp.bindServer(Constant.HOST,Constant.PORT);
     }
 
     /**

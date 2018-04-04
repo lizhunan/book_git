@@ -29,6 +29,7 @@
     <string name="qq_login">QQ登录</string>
     <string name="wx_login">微信登录</string>
     <string name="forget_pwd"><u>忘记密码?</u></string>
+    <string name="net_error">网络错误</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_settings">Hello blank fragment</string>
 

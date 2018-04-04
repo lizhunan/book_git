@@ -20,9 +20,9 @@ public interface OnSubscriberListener {
     /**
      * 成功
      *
-     * @param content 返回json
+     * @param o 返回对象
      */
-    void onSuccess(String content);
+    void onSuccess(Object o);
 
     /**
      * 失败

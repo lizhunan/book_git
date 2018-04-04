@@ -3,6 +3,7 @@ package com.sdjy.book.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sdjy.book.mvp.http.base.ResponseHttp;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class JsonParseUtil {
     /**
      * 实体转化为json
      *
-     * @param bean
-     * @return
+     * @param bean 实体类
+     * @return json
      */
     public static <T> String modeToJson(T bean) {
         return gson.toJson(bean);
@@ -32,20 +33,23 @@ public class JsonParseUtil {
     /**
      * json转换为实体
      *
-     * @param json
-     * @param cls
-     * @param <T>
-     * @return
+     * @param json json
+     * @param cls  实体类
+     * @param <T>  需要转成的泛型
+     * @return 实体类
      */
     public static <T> T jsonToMode(String json, Class<T> cls) {
         return gson.fromJson(json, cls);
     }
 
+
     /**
-     * @param json
-     * @param cls
-     * @param <T>
-     * @return
+     * json转换list
+     *
+     * @param json json
+     * @param cls  实体类
+     * @param <T>  需要专成的泛型
+     * @return 实体类
      */
     public static <T> List<T> jsonArrayToList(String json, Class<T> cls) {
         Type type = new TypeToken<ArrayList<T>>() {
@@ -53,5 +57,11 @@ public class JsonParseUtil {
         return gson.fromJson(json, type);
     }
 
+    public static Gson getGson() {
+        return gson;
+    }
 
+    public static void setGson(Gson gson) {
+        JsonParseUtil.gson = gson;
+    }
 }

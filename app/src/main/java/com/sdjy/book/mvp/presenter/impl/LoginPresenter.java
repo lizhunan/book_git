@@ -5,27 +5,27 @@ import android.content.Context;
 import com.sdjy.book.app.Constant;
 import com.sdjy.book.mvp.entity.User;
 import com.sdjy.book.mvp.http.base.ResponseHttp;
-import com.sdjy.book.mvp.model.RegisterModel;
+import com.sdjy.book.mvp.model.LoginModel;
 import com.sdjy.book.mvp.presenter.IBase;
 import com.sdjy.book.view.IRefresh;
 
 /**
- * Created by 李竹楠 on 2018/3/16.
- * 用户注册presenter
+ * Created by 李竹楠 on 2018/3/22.
+ * 普通登录presenter
  */
 
-public class RegisterPresenter implements IBase<ResponseHttp<User>> {
+public class LoginPresenter implements IBase<ResponseHttp<User>> {
 
-    private RegisterModel registerModel;
+    private LoginModel loginModel;
     private IRefresh<User> iRefresh;
 
-    public RegisterPresenter(IRefresh<User> iRefresh) {
+    public LoginPresenter(IRefresh<User> iRefresh) {
         this.iRefresh = iRefresh;
-        this.registerModel = new RegisterModel();
+        this.loginModel = new LoginModel();
     }
 
-    public void regist(Context context, String username, String password, String phone) {
-        registerModel.regist(this, context, username, password, phone);
+    public void login(Context context, String username, String password) {
+        loginModel.login(this, context, username, password);
     }
 
     @Override
@@ -39,22 +39,22 @@ public class RegisterPresenter implements IBase<ResponseHttp<User>> {
     }
 
     @Override
-    public void onSuccess(ResponseHttp<User> s) {
-        switch (s.getStatus()) {
+    public void onSuccess(ResponseHttp<User> userResponseHttp) {
+        switch (userResponseHttp.getStatus()) {
             case Constant.OK_CODE:
-                iRefresh.onSuccess(s.getData());
+                iRefresh.onSuccess(userResponseHttp.getData());
                 break;
             case Constant.CLIENT_ERR_CODE:
-                iRefresh.onFiled(s.getDesc());
+                iRefresh.onFiled(userResponseHttp.getDesc());
                 break;
             case Constant.SERVER_ERR_CODE:
-                iRefresh.onFiled(s.getDesc());
+                iRefresh.onFiled(userResponseHttp.getDesc());
                 break;
         }
     }
 
     @Override
     public void onFailed(String failed) {
-
+        iRefresh.onFiled(failed);
     }
 }

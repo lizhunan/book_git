@@ -36,12 +36,12 @@ public class NetWorkStateReceiver extends BroadcastReceiver {
                             || info.getType() == ConnectivityManager.TYPE_MOBILE) {
                         if (isNoAvailable) {
                             isNoAvailable = false;
-                            netWorkStateListener.resumeConnect();
+                        //    netWorkStateListener.resumeConnect();
                         }
                     }
                 } else {
                     isNoAvailable = true;
-                    netWorkStateListener.disConnect();
+//                    netWorkStateListener.disConnect();
                 }
             }
         }
