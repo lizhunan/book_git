@@ -26,7 +26,34 @@
             android:key="@string/pref_key_accountsafe_settings"
             android:summary="@string/pref_summary_accountsafe_settings"
             android:title="@string/pref_title_accountsafe_settings">
-
+            <PreferenceCategory
+                android:key="@string/pref_key_accountmanager_settings"
+                android:title="@string/pref_title_accountmanager_settings">
+                <Preference
+                    android:key="@string/pref_key_email_settings"
+                    android:summary="@string/pref_summary_email_settings"
+                    android:title="@string/pref_title_email_settings" />
+                <Preference
+                    android:key="@string/pref_key_phone_settings"
+                    android:summary="@string/pref_summary_phone_settings"
+                    android:title="@string/pref_title_phone_settings" />
+                <Preference
+                    android:key="@string/pref_key_password_settings"
+                    android:summary="@string/pref_summary_password_settings"
+                    android:title="@string/pref_title_password_settings" />
+            </PreferenceCategory>
+            <PreferenceCategory
+                android:key="@string/pref_key_sc_settings"
+                android:title="@string/pref_title_sc_settings">
+                <SwitchPreference
+                    android:key="@string/pref_key_wx_settings"
+                    android:summary="@string/pref_summary_wx_settings"
+                    android:title="@string/pref_title_wx_settings" />
+                <SwitchPreference
+                    android:key="@string/pref_key_qq_settings"
+                    android:summary="@string/pref_summary_qq_settings"
+                    android:title="@string/pref_title_qq_settings" />
+            </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
 

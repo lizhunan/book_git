@@ -2,22 +2,34 @@
     <string name="app_name">book</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="phone_selectable">手机号（可选）</string>
     <string name="title_map">附近回收点</string>
     <string name="title_scanning">扫一扫</string>
     <string name="title_account">个人中心</string>
-
     <string name="machine_code">机器码</string>
     <string name="user">用户</string>
     <string name="book_name">书籍名称</string>
     <string name="community_contri">社区贡献</string>
     <string name="setting">设置</string>
-
     <string name="input_m_code">手动输入机器码</string>
     <string name="flashlight">手电筒</string>
-
     <string name="scanning_info">对准机器上的二维码，即可自动扫描</string>
     <string name="user_page_info">这个人很懒，什么都没有留下。</string>
-
+    <string name="please_input_phone">请输入手机号码</string>
+    <string name="please_input_CAPTCHA">请输入验证码</string>
+    <string name="please_input_username">请输入用户名</string>
+    <string name="please_input_password">请输入密码</string>
+    <string name="CAPTCHA">验证码</string>
+    <string name="I_read_agree"><u>我已阅读，并同意</u></string>
+    <string name="protocol"><u>《用户协议》</u></string>
+    <string name="login">登录</string>
+    <string name="phone_login">手机号验证并登录</string>
+    <string name="register">注册</string>
+    <string name="qq_login">QQ登录</string>
+    <string name="wx_login">微信登录</string>
+    <string name="forget_pwd"><u>忘记密码?</u></string>
+    <string name="net_error">网络错误</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_settings">Hello blank fragment</string>
 
@@ -37,6 +49,13 @@
     <string name="pref_key_deal_settings">pref_key_deal_settings</string>
     <string name="pref_key_connect_settings">pref_key_connect_settings</string>
     <string name="pref_key_logout_settings">pref_key_logout_settings</string>
+    <string name="pref_key_accountmanager_settings">pref_key_accountmanager_settings</string>
+    <string name="pref_key_email_settings">pref_key_email_settings</string>
+    <string name="pref_key_phone_settings">pref_key_phone_settings</string>
+    <string name="pref_key_password_settings">pref_key_password_settings</string>
+    <string name="pref_key_sc_settings">pref_key_sc_settings</string>
+    <string name="pref_key_wx_settings">pref_key_wx_settings</string>
+    <string name="pref_key_qq_settings">pref_key_qq_settings</string>
     <!-- title -->
     <string name="pref_title_base_settings">基本设置</string>
     <string name="pref_title_netmode_settings">省流量模式</string>
@@ -51,12 +70,24 @@
     <string name="pref_title_deal_settings">回收协议</string>
     <string name="pref_title_connect_settings">联系我们</string>
     <string name="pref_title_logout_settings">退出帐号</string>
+    <string name="pref_title_accountmanager_settings">账号管理</string>
+    <string name="pref_title_email_settings">邮箱</string>
+    <string name="pref_title_phone_settings">手机</string>
+    <string name="pref_title_password_settings">设置密码</string>
+    <string name="pref_title_sc_settings">社交帐号</string>
+    <string name="pref_title_wx_settings">微信</string>
+    <string name="pref_title_qq_settings">QQ</string>
     <!-- summary -->
     <string name="pref_summary_netmode_settings">仅Wi-Fi环境下才会自动加载图片</string>
     <string name="pref_summary_autodownload_settings">仅Wi-Fi环境下会自动下载</string>
     <string name="pref_summary_clearcache_settings">包括图片、音频和视频缓存</string>
     <string name="pref_summary_accountsafe_settings">管理帐号安全，修改帐号密码等</string>
     <string name="pref_summary_checkipdate_settings">当前版本</string>
+    <string name="pref_summary_email_settings">绑定邮箱</string>
+    <string name="pref_summary_phone_settings">绑定手机</string>
+    <string name="pref_summary_password_settings">为保障您的帐号安全，请设置密码</string>
+    <string name="pref_summary_wx_settings">尚未绑定</string>
+    <string name="pref_summary_qq_settings">尚未绑定</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

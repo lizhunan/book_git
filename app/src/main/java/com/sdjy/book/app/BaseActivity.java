@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * 当前Activity渲染的视图View
      **/
     private View mContextView = null;
+    /**
+     * 填充当前fragment
+     */
+    protected Fragment currentFragment = new Fragment();
     /**
      * 日志信息
      **/
@@ -246,6 +252,33 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected <T extends View> T $(int resId) {
         return (T) super.findViewById(resId);
     }
+
+
+    /**
+     * 切换fragment
+     * 用于优化切换fragment时卡顿现象
+     *
+     * @param targetFragment 目标fragment
+     * @param resId          fragment容器
+     * @return FragmentTransaction
+     */
+    protected FragmentTransaction switchFragment(Fragment targetFragment, int resId) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if (!targetFragment.isAdded()) {
+            //第一次使用switchFragment()时currentFragment为null，所以要判断一下
+            if (currentFragment != null) {
+                fragmentTransaction.hide(currentFragment);
+            }
+            fragmentTransaction.add(resId, targetFragment, targetFragment.getClass().getName());
+        } else {
+            fragmentTransaction
+                    .hide(currentFragment)
+                    .show(targetFragment);
+        }
+        currentFragment = targetFragment;
+        return fragmentTransaction;
+    }
+
 
     public void setSetStatusBar(boolean setStatusBar) {
         isSetStatusBar = setStatusBar;

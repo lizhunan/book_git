@@ -20,4 +20,13 @@
         <item name="colorAccent">@color/colorTealAccent</item>
     </style>
 
+    <!-- 引导页主题，为防止启动app时出现白屏或黑屏现象，加入windowBackground -->
+    <style name="AppThemeSplash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorTealPrimary</item>
+        <item name="colorPrimaryDark">@color/colorTealPrimaryDark</item>
+        <item name="colorAccent">@color/colorTealAccent</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

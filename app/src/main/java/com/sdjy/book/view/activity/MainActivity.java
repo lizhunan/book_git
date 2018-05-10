@@ -2,14 +2,19 @@ package com.sdjy.book.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +27,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.orhanobut.logger.Logger;
 import com.sdjy.book.R;
 import com.sdjy.book.app.BaseActivity;
+import com.sdjy.book.app.Constant;
 import com.sdjy.book.view.fragment.MapFragment;
 import com.sdjy.book.view.fragment.ScanningFragment;
 import com.sdjy.book.view.fragment.UserFragment;
@@ -29,8 +35,6 @@ import com.sdjy.book.view.fragment.UserFragment;
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private BottomNavigationView navigation;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
     private MapFragment mapFragment;
     private ScanningFragment scanningFragment;
     private UserFragment userFragment;
@@ -62,16 +66,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         /*
         * 打开默认的fragment
         * */
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
         mapFragment = MapFragment.newInstance();
-        fragmentTransaction.replace(R.id.content, mapFragment);
-        fragmentTransaction.commit();
+        scanningFragment = ScanningFragment.newInstance();
+        userFragment = UserFragment.newInstance();
+        switchFragment(mapFragment, R.id.content).commit();
     }
 
     @Override
     protected void doBusiness(Context mContext) {
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Log.d("doBussiness","con::"+preferences.getBoolean(Constant.SWIPRENETMODE_PRE_KEY,false));
     }
 
     @Override
@@ -114,28 +118,20 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         }
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        fragmentTransaction = fragmentManager.beginTransaction();
         switch (item.getItemId()) {
             case R.id.navigation_map:
                 titleTv.setText(getResources().getString(R.string.title_map));
-                mapFragment = MapFragment.newInstance();
-                fragmentTransaction.replace(R.id.content, mapFragment);
-                fragmentTransaction.commit();
+                switchFragment(mapFragment, R.id.content).commit();
                 return true;
             case R.id.navigation_scanning:
                 titleTv.setText(getResources().getString(R.string.title_scanning));
-                scanningFragment = ScanningFragment.newInstance();
-                fragmentTransaction.replace(R.id.content, scanningFragment);
-                fragmentTransaction.commit();
+                switchFragment(scanningFragment, R.id.content).commit();
                 return true;
             case R.id.navigation_account:
                 titleTv.setText(getResources().getString(R.string.title_account));
-                userFragment = UserFragment.newInstance();
-                fragmentTransaction.replace(R.id.content, userFragment);
-                fragmentTransaction.commit();
+                switchFragment(userFragment, R.id.content).commit();
                 return true;
         }
         return false;

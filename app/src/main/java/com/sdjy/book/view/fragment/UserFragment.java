@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,11 @@ import android.widget.TextView;
 
 import com.sdjy.book.R;
 import com.sdjy.book.app.BaseFragment;
+import com.sdjy.book.app.Constant;
+import com.sdjy.book.mvp.http.FastHttp;
+import com.sdjy.book.mvp.http.OnSubscriberListener;
+import com.sdjy.book.mvp.http.base.HttpType;
+import com.sdjy.book.view.activity.LoginByPhoneActivity;
 import com.sdjy.book.view.activity.SettingsActivity;
 
 public class UserFragment extends BaseFragment {
@@ -25,6 +31,7 @@ public class UserFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private TextView nameTv;
     private TextView infoTv;
+    private ConstraintLayout userInfoCl;
 
     public UserFragment() {
 
@@ -50,6 +57,7 @@ public class UserFragment extends BaseFragment {
         recyclerView = $(view, R.id.list_view);
         nameTv = $(view, R.id.name_tv);
         infoTv = $(view, R.id.info_tv);
+        userInfoCl = $(view, R.id.userinfo_cl);
     }
 
     @Override
@@ -61,12 +69,29 @@ public class UserFragment extends BaseFragment {
     protected void widgetClick(View view) {
         switch (view.getId()) {
             case R.id.comm_contri_iv:
+                startActivity(new Intent(getActivity(), LoginByPhoneActivity.class));
                 break;
             case R.id.setting_iv:
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
                 break;
             case R.id.profile_civ:
                 break;
+            case R.id.userinfo_cl:
+                break;
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+         /*
+        * 在这里进行更新数据
+        * fragment显示时刷新数据
+        * */
+        if (hidden) {
+            //fragment隐藏时调用
+        } else {
+            //fragment显示时调用
         }
     }
 
@@ -75,5 +100,6 @@ public class UserFragment extends BaseFragment {
         commContriIv.setOnClickListener(this);
         settingIv.setOnClickListener(this);
         profileIv.setOnClickListener(this);
+        userInfoCl.setOnClickListener(this);
     }
 }
