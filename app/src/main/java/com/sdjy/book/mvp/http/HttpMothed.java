@@ -269,14 +269,4 @@ public class HttpMothed {
         }
     }
 
-    private class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
-        @Override
-        public T call(HttpResult<T> tHttpResult) {
-            if (tHttpResult.getResultCode() != 0) {
-                Log.d("httpResultFunc", "error");
-            }
-            return tHttpResult.getData();
-        }
-    }
-
 }

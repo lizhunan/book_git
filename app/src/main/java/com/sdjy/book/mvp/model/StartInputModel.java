@@ -5,51 +5,54 @@ import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 import com.sdjy.book.R;
-import com.sdjy.book.mvp.entity.User;
-import com.sdjy.book.mvp.entity.net.RegisterEnetity;
+import com.sdjy.book.mvp.entity.net.StartInputEnetity;
 import com.sdjy.book.mvp.http.FastHttp;
 import com.sdjy.book.mvp.http.OnSubscriberListener;
 import com.sdjy.book.mvp.http.base.HttpType;
 import com.sdjy.book.mvp.http.base.ResponseHttpBy;
+import com.sdjy.book.mvp.http.base.ResponseHttp;
 import com.sdjy.book.mvp.presenter.IBase;
 import com.sdjy.book.util.JsonParseUtil;
 
 import java.lang.reflect.Type;
 
 /**
- * Created by 李竹楠 on 2018/3/16.
- * 注册model
+ * Created by 李竹楠 on 2018/4/20.
+ * 开始投递书籍
  */
 
-public class RegisterModel {
+public class StartInputModel {
 
-    public void regist(final IBase<ResponseHttpBy<User>> iBase, final Context context, String username, String password, String phone) {
+    public void start(final IBase<ResponseHttp<Boolean>> iBase, final Context context, String json) {
         iBase.onLoading(0);
-        FastHttp.SEND(HttpType.POST, context, new RegisterEnetity(username, password, phone), new OnSubscriberListener() {
+        FastHttp.SEND(HttpType.POST, context, new StartInputEnetity(json), new OnSubscriberListener() {
             @Override
             public void onCompleted() {
-                Log.d("sss", "onCompleted");
                 iBase.onLoaded();
             }
 
             @Override
             public void onStart() {
-                Log.d("sss", "onStart");
+
             }
 
             @Override
             public void onSuccess(Object o) {
-                Type type = new TypeToken<ResponseHttpBy<User>>() {
+                Log.d("StartMo", "o;" + o.toString());
+                Type type = new TypeToken<ResponseHttp<Boolean>>() {
                 }.getType();
-                ResponseHttpBy<User> userResponseHttp = JsonParseUtil.getGson().fromJson(o.toString(), type);
-                iBase.onSuccess(userResponseHttp);
+                ResponseHttp<Boolean> responseHttp = JsonParseUtil.getGson().fromJson(o.toString(), type);
+                Log.d("StartMo", "s1;" + responseHttp.getLogMsg());
+                Log.d("StartMo", "s2;" + responseHttp.isOk());
+                Log.d("StartMo", "s3;" + responseHttp.getResultData());
+                iBase.onSuccess(responseHttp);
             }
 
             @Override
             public void onFault(String s) {
-                Log.d("sss", "onFault");
                 iBase.onFailed(context.getString(R.string.net_error));
             }
         });
     }
+
 }

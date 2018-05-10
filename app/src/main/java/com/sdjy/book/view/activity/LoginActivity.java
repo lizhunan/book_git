@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -92,7 +91,7 @@ public class LoginActivity extends BaseActivity implements IRefresh<User> {
 
     @Override
     public void onFiled(String s) {
-        Snackbar.make(content,s,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(content, s, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

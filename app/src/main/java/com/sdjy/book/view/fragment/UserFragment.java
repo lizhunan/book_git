@@ -17,6 +17,7 @@ import com.sdjy.book.app.Constant;
 import com.sdjy.book.mvp.http.FastHttp;
 import com.sdjy.book.mvp.http.OnSubscriberListener;
 import com.sdjy.book.mvp.http.base.HttpType;
+import com.sdjy.book.view.activity.BookChangeActivity;
 import com.sdjy.book.view.activity.LoginByPhoneActivity;
 import com.sdjy.book.view.activity.SettingsActivity;
 
@@ -28,6 +29,7 @@ public class UserFragment extends BaseFragment {
     private ImageView commContriIv;
     private ImageView settingIv;
     private ImageView profileIv;
+    private ImageView booksChIv;
     private RecyclerView recyclerView;
     private TextView nameTv;
     private TextView infoTv;
@@ -54,6 +56,7 @@ public class UserFragment extends BaseFragment {
         commContriIv = $(view, R.id.comm_contri_iv);
         settingIv = $(view, R.id.setting_iv);
         profileIv = $(view, R.id.profile_civ);
+        booksChIv = $(view,R.id.book_change_iv);
         recyclerView = $(view, R.id.list_view);
         nameTv = $(view, R.id.name_tv);
         infoTv = $(view, R.id.info_tv);
@@ -78,6 +81,9 @@ public class UserFragment extends BaseFragment {
                 break;
             case R.id.userinfo_cl:
                 break;
+            case R.id.book_change_iv:
+                startActivity(new Intent(getActivity(), BookChangeActivity.class));
+                break;
         }
     }
 
@@ -101,5 +107,6 @@ public class UserFragment extends BaseFragment {
         settingIv.setOnClickListener(this);
         profileIv.setOnClickListener(this);
         userInfoCl.setOnClickListener(this);
+        booksChIv.setOnClickListener(this);
     }
 }

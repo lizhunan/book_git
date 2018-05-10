@@ -27,12 +27,15 @@ import com.google.zxing.integration.android.IntentResult;
 import com.orhanobut.logger.Logger;
 import com.sdjy.book.R;
 import com.sdjy.book.app.BaseActivity;
+import com.sdjy.book.app.BaseFragment;
 import com.sdjy.book.app.Constant;
+import com.sdjy.book.mvp.presenter.impl.StartInputPresenter;
+import com.sdjy.book.view.IRefresh;
 import com.sdjy.book.view.fragment.MapFragment;
 import com.sdjy.book.view.fragment.ScanningFragment;
 import com.sdjy.book.view.fragment.UserFragment;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, IRefresh<Boolean> {
 
     private BottomNavigationView navigation;
     private MapFragment mapFragment;
@@ -40,6 +43,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private UserFragment userFragment;
     private Toolbar toolbar;
     private TextView titleTv;
+    private StartInputPresenter startInputPresenter = new StartInputPresenter(this);
 
     @Override
     protected void initParms(Bundle parms) {
@@ -75,7 +79,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     protected void doBusiness(Context mContext) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Log.d("doBussiness","con::"+preferences.getBoolean(Constant.SWIPRENETMODE_PRE_KEY,false));
+        Log.d("doBussiness", "con::" + preferences.getBoolean(Constant.SWIPRENETMODE_PRE_KEY, false));
     }
 
     @Override
@@ -112,6 +116,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             if (intentResult.getContents() == null) {
             } else {
                 String ScanResult = intentResult.getContents();
+                startInputPresenter.start(this, ScanResult, "aaa");
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -135,5 +140,26 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void onSuccess(Boolean boo) {
+        scanningFragment.onFragmentListener(boo);
+        Toast.makeText(MainActivity.this,getResources().getString(R.string.bin_success),Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onFiled(String s) {
+        Toast.makeText(MainActivity.this, s, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onLoading(int process) {
+
+    }
+
+    @Override
+    public void onLoaded() {
+
     }
 }
