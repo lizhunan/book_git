@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.sdjy.book.app.Constant;
 import com.sdjy.book.mvp.entity.User;
-import com.sdjy.book.mvp.http.base.ResponseHttp;
+import com.sdjy.book.mvp.http.base.ResponseHttpBy;
 import com.sdjy.book.mvp.model.RegisterModel;
 import com.sdjy.book.mvp.presenter.IBase;
 import com.sdjy.book.view.IRefresh;
@@ -14,7 +14,7 @@ import com.sdjy.book.view.IRefresh;
  * 用户注册presenter
  */
 
-public class RegisterPresenter implements IBase<ResponseHttp<User>> {
+public class RegisterPresenter implements IBase<ResponseHttpBy<User>> {
 
     private RegisterModel registerModel;
     private IRefresh<User> iRefresh;
@@ -39,7 +39,7 @@ public class RegisterPresenter implements IBase<ResponseHttp<User>> {
     }
 
     @Override
-    public void onSuccess(ResponseHttp<User> s) {
+    public void onSuccess(ResponseHttpBy<User> s) {
         switch (s.getStatus()) {
             case Constant.OK_CODE:
                 iRefresh.onSuccess(s.getData());

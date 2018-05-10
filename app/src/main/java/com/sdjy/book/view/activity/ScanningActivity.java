@@ -1,6 +1,7 @@
 package com.sdjy.book.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -9,13 +10,18 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.sdjy.book.R;
 import com.sdjy.book.app.BaseActivity;
+import com.sdjy.book.mvp.presenter.impl.StartInputPresenter;
+import com.sdjy.book.view.IRefresh;
 
-public class ScanningActivity extends BaseActivity implements DecoratedBarcodeView.TorchListener {
+public class ScanningActivity extends BaseActivity implements DecoratedBarcodeView.TorchListener  {
 
     private CaptureManager captureManager;
     private boolean isLightOn = false;
@@ -36,6 +42,7 @@ public class ScanningActivity extends BaseActivity implements DecoratedBarcodeVi
     protected void onResume() {
         super.onResume();
         captureManager.onResume();
+
     }
 
     @Override
@@ -48,6 +55,20 @@ public class ScanningActivity extends BaseActivity implements DecoratedBarcodeVi
     protected void onDestroy() {
         super.onDestroy();
         captureManager.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -115,4 +136,5 @@ public class ScanningActivity extends BaseActivity implements DecoratedBarcodeVi
     public void onTorchOff() {
         isLightOn = false;
     }
+
 }

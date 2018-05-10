@@ -4,9 +4,11 @@ package com.sdjy.book.view.fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,7 @@ import com.sdjy.book.R;
 import com.sdjy.book.app.BaseFragment;
 import com.sdjy.book.view.activity.ScanningActivity;
 
-public class ScanningFragment extends BaseFragment {
+public class ScanningFragment extends BaseFragment{
 
     @SuppressLint("StaticFieldLeak")
     private static ScanningFragment INSTANCE;
@@ -25,6 +27,12 @@ public class ScanningFragment extends BaseFragment {
 
     public ScanningFragment() {
 
+    }
+
+    public void onFragmentListener(boolean boo) {
+        if(boo){
+
+        }
     }
 
     public static ScanningFragment newInstance() {
@@ -57,9 +65,15 @@ public class ScanningFragment extends BaseFragment {
                         .setPrompt(getResources().getString(R.string.scanning_info))
                         .setOrientationLocked(false)
                         .setCaptureActivity(ScanningActivity.class) // 设置自定义的activity是CustomActivity
-                        .initiateScan(); // 初始化扫描
+                        .initiateScan(); // 初始化s扫描
                 break;
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
     }
 
     @Override

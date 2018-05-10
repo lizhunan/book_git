@@ -7,40 +7,34 @@ package com.sdjy.book.mvp.http.base;
 
 public class ResponseHttp<T> {
 
-    private int status;
-    private String desc;
-    private T data;
+    private boolean isOk;
+    private String logMsg;
+    private T resultData;
 
     public ResponseHttp() {
     }
 
-    public ResponseHttp(int status, String desc, T data) {
-        this.status = status;
-        this.desc = desc;
-        this.data = data;
+    public boolean isOk() {
+        return isOk;
     }
 
-    public int getStatus() {
-        return status;
+    public void setOk(boolean ok) {
+        isOk = ok;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public String getLogMsg() {
+        return logMsg;
     }
 
-    public String getDesc() {
-        return desc;
+    public void setLogMsg(String logMsg) {
+        this.logMsg = logMsg;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public T getResultData() {
+        return resultData;
     }
 
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
+    public void setResultData(T resultData) {
+        this.resultData = resultData;
     }
 }

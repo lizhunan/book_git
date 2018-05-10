@@ -1,7 +1,6 @@
 package com.sdjy.book.mvp.serivce;
 
 import com.sdjy.book.mvp.entity.net.RegisterEnetity;
-import com.sdjy.book.mvp.http.HttpResult;
 import com.sdjy.book.mvp.http.base.BaseEnetity;
 import com.sdjy.book.mvp.model.RegisterModel;
 
