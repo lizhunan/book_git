@@ -45,7 +45,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeTealDark">
-
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/title_activity_main">
@@ -67,11 +66,7 @@
         <activity android:name=".view.activity.LoginActivity" />
         <activity
             android:name=".view.activity.SplashActivity"
-            android:theme="@style/AppThemeSplash">
-
-        </activity>
-
-
+            android:theme="@style/AppThemeSplash"></activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -85,6 +80,11 @@
                 <data android:scheme="1106812701" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
         <activity android:name=".view.activity.BookChangeActivity"></activity>
     </application>
 
