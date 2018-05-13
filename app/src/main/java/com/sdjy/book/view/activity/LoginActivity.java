@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity implements IRefresh<User> {
             case R.id.forget_pwd_tv:
                 break;
             case R.id.login_btn:
-                loginPresenter.login(LoginActivity.this, usernameEt.getText().toString(), passwordEt.getText().toString());
+                //loginPresenter.login(LoginActivity.this, usernameEt.getText().toString(), passwordEt.getText().toString());
                 break;
         }
     }
@@ -78,13 +78,6 @@ public class LoginActivity extends BaseActivity implements IRefresh<User> {
 
     @Override
     public void onSuccess(User user) {
-        editor.putString(Constant.USERNAME, user.getName());
-        editor.putString(Constant.PASSWORD, user.getPswd());
-        editor.putString(Constant.PHONE, user.getPhone());
-        editor.putString(Constant.QQ, user.getQqid());
-        editor.putString(Constant.WX, user.getWxid());
-        editor.putString(Constant.TOKEN, user.getToken());
-        editor.commit();
         startActivity(MainActivity.class);
         finish();
     }

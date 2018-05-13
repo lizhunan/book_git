@@ -32,7 +32,7 @@ public final class Constant {
     /**
      * 普通登录接口
      */
-    public static final String LOGIN_ = "user/lo";
+    public static final String LOGIN_ = "recyleBook/apiByForm/userLogin";
 
     /**
      * 扫码投放接口
@@ -41,16 +41,15 @@ public final class Constant {
     /**
      * 返回单个书籍详细信息
      */
-    public static final String BOOK_INFO = "recyleBook/apiByForm/bookInfo";
+    public static final String BOOK_INFO_ = "recyleBook/apiByForm/bookInfo";
     /**
      * 读取所有书籍信息
      */
-    public static final String GET_BOOKS_INFO = "recyleBook/apiByForm/getBooksInfo";
+    public static final String GET_BOOKS_INFO_ = "recyleBook/apiByForm/getBooksInfo";
 
     public static final int OK_CODE = 1000;
     public static final int CLIENT_ERR_CODE = 1001;
     public static final int SERVER_ERR_CODE = 1002;
-
 
     /*
     *
@@ -67,15 +66,19 @@ public final class Constant {
     * 用户常量----------------------------------------------------------
     * */
 
-    public static String USERNAME = "";
-    public static String PASSWORD = "";
-    public static String PHONE = "";
-    public static String QQ = "";
-    public static String WX = "";
-    /**
-     * token有效性验证
-     */
-    public static String TOKEN = "";
+    public static String USERNAME = "USERNAME";
+    public static String LOGINNAME = "LOGINNAME";
+    public static String PHONE = "PHONE";
+    public static String AGE = "AGE";
+    public static String SEX = "SEX";
+    public static String USERTYPE = "USERTYPE";
+    public static String QQ = "WX";
+    public static String WX = "WX";
+    public static String TOKEN = "TOKEN";
+    public static String POINTS = "POINTS";
+    public static String LASTLOGINDATE = "LASTLOGINDATE";
+    public static String PROFILE = "PROFILE";
+
 
     /*
     *

@@ -5,6 +5,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +17,7 @@ import android.widget.TextView;
 
 import com.sdjy.book.R;
 import com.sdjy.book.app.BaseFragment;
+import com.sdjy.book.app.BookApplication;
 import com.sdjy.book.app.Constant;
 import com.sdjy.book.mvp.http.FastHttp;
 import com.sdjy.book.mvp.http.OnSubscriberListener;
@@ -34,6 +39,8 @@ public class UserFragment extends BaseFragment {
     private TextView nameTv;
     private TextView infoTv;
     private ConstraintLayout userInfoCl;
+    private String figureurl = "";
+    private SharedPreferences sharedPreferences;
 
     public UserFragment() {
 
@@ -56,7 +63,7 @@ public class UserFragment extends BaseFragment {
         commContriIv = $(view, R.id.comm_contri_iv);
         settingIv = $(view, R.id.setting_iv);
         profileIv = $(view, R.id.profile_civ);
-        booksChIv = $(view,R.id.book_change_iv);
+        booksChIv = $(view, R.id.book_change_iv);
         recyclerView = $(view, R.id.list_view);
         nameTv = $(view, R.id.name_tv);
         infoTv = $(view, R.id.info_tv);
@@ -65,7 +72,12 @@ public class UserFragment extends BaseFragment {
 
     @Override
     protected void doBusiness(Context mContext, Activity activity) {
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(BookApplication.getContext());
+        figureurl = sharedPreferences.getString(Constant.PROFILE,"");
+        if (!figureurl.equals("")) {
+            Uri parse = Uri.parse(figureurl);
+           // profileIv.setImageBitmap(parse);
+        }
     }
 
     @Override

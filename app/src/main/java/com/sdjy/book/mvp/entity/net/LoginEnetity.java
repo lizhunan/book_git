@@ -10,31 +10,21 @@ import com.sdjy.book.mvp.http.base.BaseEnetity;
 
 public class LoginEnetity extends BaseEnetity {
 
-    private String name;
-    private String pswd;
+    private String json;
 
     public LoginEnetity() {
     }
 
-    public LoginEnetity(String name, String pswd) {
-        this.name = name;
-        this.pswd = pswd;
+    public LoginEnetity(String json) {
+        this.json = json;
     }
 
-    public String getName() {
-        return name;
+    public String getJson() {
+        return json;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPswd() {
-        return pswd;
-    }
-
-    public void setPswd(String pswd) {
-        this.pswd = pswd;
+    public void setJson(String json) {
+        this.json = json;
     }
 
     @Override

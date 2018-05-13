@@ -82,13 +82,6 @@ public class RegisterActivity extends BaseActivity implements IRefresh<User> {
 
     @Override
     public void onSuccess(User user) {
-        editor.putString(Constant.USERNAME, user.getName());
-        editor.putString(Constant.PASSWORD, user.getPswd());
-        editor.putString(Constant.PHONE, user.getPhone());
-        editor.putString(Constant.QQ, user.getQqid());
-        editor.putString(Constant.WX, user.getWxid());
-        editor.putString(Constant.TOKEN, user.getToken());
-        editor.commit();
         startActivity(MainActivity.class);
         finish();
     }

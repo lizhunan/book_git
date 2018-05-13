@@ -1,6 +1,7 @@
 package com.sdjy.book.mvp.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 import com.sdjy.book.R;
@@ -28,9 +29,9 @@ import java.util.List;
 
 public class LoginModel {
 
-    public void login(final IBase<ResponseHttpBy<User>> iBase, final Context context, final String username, String password) {
+    public void login(final IBase<ResponseHttp<User>> iBase, final Context context, String json) {
         iBase.onLoading(0);
-        FastHttp.SEND(HttpType.POST, context, new LoginEnetity(username, password), new OnSubscriberListener() {
+        FastHttp.SEND(HttpType.POST, context, new LoginEnetity(json), new OnSubscriberListener() {
             @Override
             public void onCompleted() {
                 iBase.onLoaded();
@@ -42,9 +43,12 @@ public class LoginModel {
 
             @Override
             public void onSuccess(Object o) {
-                Type type = new TypeToken<ResponseHttpBy<User>>() {
+                Type type = new TypeToken<ResponseHttp<User>>() {
                 }.getType();
-                ResponseHttpBy<User> userResponseHttp = JsonParseUtil.getGson().fromJson(o.toString(), type);
+                Log.d("loginM:","o::"+o);
+                ResponseHttp<User> userResponseHttp = JsonParseUtil.getGson().fromJson(o.toString(), type);
+
+                Log.d("loginM:","::"+userResponseHttp.getResultData());
                 iBase.onSuccess(userResponseHttp);
             }
 

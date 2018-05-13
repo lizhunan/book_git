@@ -8,24 +8,41 @@ import android.os.Parcelable;
  * 用户实体类
  */
 
-public class User implements Parcelable{
+public class User implements Parcelable {
 
-    private int id;
-    private int registertype;
-    private String name;
-    private String token;
-    private String phone;
-    private String wxid;
-    private String qqid;
-    private String pswd;
+    private int age;
+    private int points;
+    private String loginname;
+    private String username;
+    private String sex;
+    private String userType;
+    private String lastloginDate;
+    private String actionSession;
+
+    public User() {
+    }
+
+    public User(int age, int points, String loginname, String username, String sex,
+                String userType, String lastloginDate, String actionSession) {
+        this.age = age;
+        this.points = points;
+        this.loginname = loginname;
+        this.username = username;
+        this.sex = sex;
+        this.userType = userType;
+        this.lastloginDate = lastloginDate;
+        this.actionSession = actionSession;
+    }
 
     protected User(Parcel in) {
-        id = in.readInt();
-        registertype = in.readInt();
-        name = in.readString();
-        token = in.readString();
-        phone = in.readString();
-        pswd = in.readString();
+        age = in.readInt();
+        points = in.readInt();
+        loginname = in.readString();
+        username = in.readString();
+        sex = in.readString();
+        userType = in.readString();
+        lastloginDate = in.readString();
+        actionSession = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -40,68 +57,68 @@ public class User implements Parcelable{
         }
     };
 
-    public int getId() {
-        return id;
+    public int getAge() {
+        return age;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public int getRegistertype() {
-        return registertype;
+    public int getPoints() {
+        return points;
     }
 
-    public void setRegistertype(int registertype) {
-        this.registertype = registertype;
+    public void setPoints(int points) {
+        this.points = points;
     }
 
-    public String getName() {
-        return name;
+    public String getLoginname() {
+        return loginname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
     }
 
-    public String getToken() {
-        return token;
+    public String getUsername() {
+        return username;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getSex() {
+        return sex;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public String getWxid() {
-        return wxid;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setWxid(String wxid) {
-        this.wxid = wxid;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
-    public String getQqid() {
-        return qqid;
+    public String getLastloginDate() {
+        return lastloginDate;
     }
 
-    public void setQqid(String qqid) {
-        this.qqid = qqid;
+    public void setLastloginDate(String lastloginDate) {
+        this.lastloginDate = lastloginDate;
     }
 
-    public String getPswd() {
-        return pswd;
+    public String getActionSession() {
+        return actionSession;
     }
 
-    public void setPswd(String pswd) {
-        this.pswd = pswd;
+    public void setActionSession(String actionSession) {
+        this.actionSession = actionSession;
     }
 
     @Override
@@ -111,11 +128,13 @@ public class User implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeInt(registertype);
-        parcel.writeString(name);
-        parcel.writeString(token);
-        parcel.writeString(phone);
-        parcel.writeString(pswd);
+        parcel.writeInt(age);
+        parcel.writeInt(points);
+        parcel.writeString(loginname);
+        parcel.writeString(username);
+        parcel.writeString(sex);
+        parcel.writeString(userType);
+        parcel.writeString(lastloginDate);
+        parcel.writeString(actionSession);
     }
 }

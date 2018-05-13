@@ -29,6 +29,6 @@ public class BookInfoEnetity extends BaseEnetity {
 
     @Override
     public String getRuqestURL() {
-        return Constant.BOOK_INFO;
+        return Constant.BOOK_INFO_;
     }
 }
