@@ -4,6 +4,7 @@ package com.sdjy.book.view.fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,7 +23,12 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.TextureMapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.PolylineOptions;
 import com.sdjy.book.R;
 import com.sdjy.book.app.BaseFragment;
 import com.sdjy.book.app.BookApplication;
@@ -39,6 +45,10 @@ public class MapFragment extends BaseFragment implements AMapLocationListener {
     private MyLocationStyle myLocationStyle;
     private AMapLocationClient mapLocationClient;
     private AMapLocationClientOption aMapLocationClientOption;
+
+    private MarkerOptions markerOption;
+    private LatLng latlng;
+    private Marker marker;
 
     public MapFragment() {
 
@@ -93,9 +103,9 @@ public class MapFragment extends BaseFragment implements AMapLocationListener {
         * 在这里进行更新数据
         * fragment显示时刷新数据
         * */
-        if(hidden){
+        if (hidden) {
             //fragment隐藏时调用
-        }else{
+        } else {
             //fragment显示时调用
         }
     }
@@ -137,6 +147,9 @@ public class MapFragment extends BaseFragment implements AMapLocationListener {
         aMapLocationClientOption.setLocationCacheEnable(true);
         mapLocationClient.setLocationOption(aMapLocationClientOption);
         mapLocationClient.startLocation();
+
+        latlng = new LatLng(36.541264, 116.802539);
+        addMarkersToMap();
     }
 
     @Override
@@ -158,4 +171,16 @@ public class MapFragment extends BaseFragment implements AMapLocationListener {
     public void onLocationChanged(AMapLocation aMapLocation) {
 
     }
+
+    /**
+     * 在地图上添加marker
+     */
+    private void addMarkersToMap() {
+
+        markerOption = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.marker))
+                .position(latlng)
+                .draggable(true);
+        marker = aMap.addMarker(markerOption);
+    }
+
 }
