@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -68,6 +69,8 @@ public class UserFragment extends BaseFragment {
         nameTv = $(view, R.id.name_tv);
         infoTv = $(view, R.id.info_tv);
         userInfoCl = $(view, R.id.userinfo_cl);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
