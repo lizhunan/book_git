@@ -45,11 +45,11 @@ public class SplashActivity extends BaseActivity {
             e.printStackTrace();
         }
         String token = settingsPreference.getString(Constant.TOKEN, "");
-        if (token.equals("")) {
-            startActivity(LoginByPhoneActivity.class);
-        } else {
+//        if (token.equals("")) {
+//            startActivity(LoginByPhoneActivity.class);
+//        } else {
             startActivity(MainActivity.class);
-        }
+//        }
         finish();
     }
 

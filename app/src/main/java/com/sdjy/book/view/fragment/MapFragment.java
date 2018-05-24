@@ -1,18 +1,17 @@
 package com.sdjy.book.view.fragment;
 
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -22,18 +21,24 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.MapsInitializer;
+import com.amap.api.maps.Projection;
 import com.amap.api.maps.TextureMapView;
+import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.MultiPointItem;
+import com.amap.api.maps.model.MultiPointOverlay;
+import com.amap.api.maps.model.MultiPointOverlayOptions;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.maps.model.PolylineOptions;
 import com.sdjy.book.R;
 import com.sdjy.book.app.BaseFragment;
 import com.sdjy.book.app.BookApplication;
 import com.sdjy.book.app.Constant;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapFragment extends BaseFragment implements AMapLocationListener {
 
@@ -46,9 +51,7 @@ public class MapFragment extends BaseFragment implements AMapLocationListener {
     private AMapLocationClient mapLocationClient;
     private AMapLocationClientOption aMapLocationClientOption;
 
-    private MarkerOptions markerOption;
-    private LatLng latlng;
-    private Marker marker;
+    Marker marker = null;
 
     public MapFragment() {
 
@@ -134,7 +137,7 @@ public class MapFragment extends BaseFragment implements AMapLocationListener {
         myLocationStyle.interval(1000 * 60 * 60);//使用高延迟取消自动定位，使用LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER时出现定位到北京的问题
         aMap.getUiSettings().setMyLocationButtonEnabled(true);
         aMap.setMyLocationEnabled(true);
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(17));//默认缩放级别
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
         myLocationStyle.showMyLocation(true);
         myLocationStyle.strokeColor(getResources().getColor(R.color.no_color));
@@ -148,8 +151,57 @@ public class MapFragment extends BaseFragment implements AMapLocationListener {
         mapLocationClient.setLocationOption(aMapLocationClientOption);
         mapLocationClient.startLocation();
 
-        latlng = new LatLng(36.541264, 116.802539);
-        addMarkersToMap();
+        List<MultiPointItem> list = new ArrayList<MultiPointItem>();
+        //36.5375234379,116.7959761620
+        //36.5369329474,116.7964696884
+        //36.5353511001,116.7962175608
+        //36.5359459130,116.7974513769
+        //36.5378337669,116.7974781990
+        LatLng latLng;
+        MultiPointItem multiPointItem;
+        latLng = new LatLng(36.5375234379, 116.7959761620, false);//保证经纬度没有问题的时候可以填false
+        multiPointItem = new MultiPointItem(latLng);
+        list.add(multiPointItem);
+        latLng = new LatLng(36.5369329474, 116.7964696884, false);
+        multiPointItem = new MultiPointItem(latLng);
+        list.add(multiPointItem);
+        latLng = new LatLng(36.5353511001, 116.7962175608, false);
+        multiPointItem = new MultiPointItem(latLng);
+        list.add(multiPointItem);
+        latLng = new LatLng(36.5359459130, 116.7974513769, false);
+        multiPointItem = new MultiPointItem(latLng);
+        list.add(multiPointItem);
+        latLng = new LatLng(36.5378337669, 116.7974781990, false);
+        multiPointItem = new MultiPointItem(latLng);
+        list.add(multiPointItem);
+
+        //添加一个Marker用来展示海量点点击效果
+        marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.marker);
+        MultiPointOverlayOptions overlayOptions = new MultiPointOverlayOptions();
+        overlayOptions.icon(bitmapDescriptor);
+        overlayOptions.anchor(0.5f, 0.5f);
+        MultiPointOverlay multiPointOverlay = aMap.addMultiPointOverlay(overlayOptions);
+        aMap.setOnMultiPointClickListener(new AMap.OnMultiPointClickListener() {
+            @Override
+            public boolean onPointClick(MultiPointItem pointItem) {
+                android.util.Log.i("amap ", "onPointClick");
+
+                if (marker.isRemoved()) {
+                    //调用amap clear之后会移除marker，重新添加一个
+                    marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+                }
+                //添加一个Marker用来展示海量点点击效果
+                marker.setPosition(pointItem.getLatLng());
+                marker.setToTop();
+                Toast.makeText(getActivity(), "点击了：" + marker.getPosition(), Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+
+        multiPointOverlay.setItems(list);
+        multiPointOverlay.setEnable(true);
+
     }
 
     @Override
@@ -170,17 +222,6 @@ public class MapFragment extends BaseFragment implements AMapLocationListener {
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
 
-    }
-
-    /**
-     * 在地图上添加marker
-     */
-    private void addMarkersToMap() {
-
-        markerOption = new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.marker))
-                .position(latlng)
-                .draggable(true);
-        marker = aMap.addMarker(markerOption);
     }
 
 }

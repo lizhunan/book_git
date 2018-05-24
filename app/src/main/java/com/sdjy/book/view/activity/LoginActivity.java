@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity implements IRefresh<User> {
             case R.id.forget_pwd_tv:
                 break;
             case R.id.login_btn:
-                //loginPresenter.login(LoginActivity.this, usernameEt.getText().toString(), passwordEt.getText().toString());
+//                loginPresenter.login(LoginActivity.this, usernameEt.getText().toString(), passwordEt.getText().toString());
                 break;
         }
     }
