@@ -27,7 +27,7 @@ import java.util.List;
 
 public class BooksInfoModel {
 
-    public void getBooksInfo(final IBase<ResponseHttp<String>> iBase, final Context context, String json) {
+    public void getBooksInfo(final IBase<ResponseHttp<BooksInfo>> iBase, final Context context, String json) {
         iBase.onLoading(0);
         FastHttp.SEND(HttpType.POST, context, new GetBooksInfoEnetity(json), new OnSubscriberListener() {
             @Override
@@ -43,9 +43,9 @@ public class BooksInfoModel {
             @Override
             public void onSuccess(Object o) {
                 Log.d("StartMo", "o;" + o.toString());
-                Type type = new TypeToken<ResponseHttp<String>>() {
+                Type type = new TypeToken<ResponseHttp<BooksInfo>>() {
                 }.getType();
-                ResponseHttp<String> responseHttp = JsonParseUtil.getGson().fromJson(o.toString(), type);
+                ResponseHttp<BooksInfo> responseHttp = JsonParseUtil.getGson().fromJson(o.toString(), type);
                 Log.d("booksinfo", "s1;" + responseHttp.getLogMsg());
                 Log.d("booksinfo", "s2;" + responseHttp.isOk());
                 Log.d("booksinfo", "s3;" + responseHttp.getResultData());

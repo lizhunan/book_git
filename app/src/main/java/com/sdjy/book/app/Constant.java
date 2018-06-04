@@ -46,6 +46,14 @@ public final class Constant {
      * 读取所有书籍信息
      */
     public static final String GET_BOOKS_INFO_ = "recyleBook/apiByForm/getBooksInfo";
+    /**
+     * 换购记录
+     */
+    public static final String BUY_INFO_ = "recyleBook/apiByForm/exchangeBookHistory";
+    /**
+     * 贡献记录
+     */
+    public static final String CONTRIBUTE_INFO_ = "recyleBook/apiByForm/contributeInfo";
 
     public static final int OK_CODE = 1000;
     public static final int CLIENT_ERR_CODE = 1001;

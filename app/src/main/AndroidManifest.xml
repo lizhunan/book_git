@@ -45,10 +45,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeTealDark">
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="ae50e60f11ec43a2d34a386baa6973e9"/>
+            android:value="ae50e60f11ec43a2d34a386baa6973e9" />
+        <meta-data
+            android:name="com.alibaba.app.appkey"
+            android:value="24917329" />
+        <meta-data
+            android:name="com.alibaba.app.appsecret"
+            android:value="2391ffb520d747ef88814e5b9dfd39b3" />
+
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/title_activity_main">
@@ -84,21 +90,40 @@
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
 
-                <!--<data android:scheme="1106812701" />-->
-            <!--</intent-filter>-->
+
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+
+
+            <!-- <data android:scheme="1106812701" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="behind"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
-        <activity android:name=".view.activity.BookChangeActivity"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".view.activity.BookChangeActivity" />
+        <activity android:name=".view.activity.ContributeActivity" />
+
+        <receiver
+            android:name=".receiver.ALiPushReceiver"
+            android:enabled="true"
+            android:exported="false"> <!-- 为保证receiver安全，建议设置不可导出，如需对其他应用开放可通过android：permission进行限制 -->
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

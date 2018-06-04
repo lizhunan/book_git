@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     private Toolbar toolbar;
     private TextView titleTv;
     private StartInputPresenter startInputPresenter = new StartInputPresenter(this);
+    private SharedPreferences preferences;
 
     @Override
     protected void initParms(Bundle parms) {
@@ -66,12 +67,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mapFragment = MapFragment.newInstance();
         scanningFragment = ScanningFragment.newInstance();
         userFragment = UserFragment.newInstance();
-        switchFragment(mapFragment, R.id.content).commit();
+        switchFragment(scanningFragment, R.id.content).commit();
     }
 
     @Override
     protected void doBusiness(Context mContext) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Log.d("doBussiness", "con::" + preferences.getBoolean(Constant.SWIPRENETMODE_PRE_KEY, false));
     }
 
@@ -109,7 +110,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             if (intentResult.getContents() == null) {
             } else {
                 String ScanResult = intentResult.getContents();
-                startInputPresenter.start(this, ScanResult, "aaa");
+                startInputPresenter.start(this, ScanResult, preferences.getString(Constant.TOKEN, ""));
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -138,7 +139,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     @Override
     public void onSuccess(Boolean boo) {
         scanningFragment.onFragmentListener(boo);
-        Toast.makeText(MainActivity.this,getResources().getString(R.string.bin_success),Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, getResources().getString(R.string.bin_success), Toast.LENGTH_LONG).show();
     }
 
     @Override

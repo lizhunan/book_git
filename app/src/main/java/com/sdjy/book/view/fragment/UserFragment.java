@@ -7,27 +7,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sdjy.book.R;
+import com.sdjy.book.adapter.ConsumeInfoAdapter;
 import com.sdjy.book.app.BaseFragment;
 import com.sdjy.book.app.BookApplication;
 import com.sdjy.book.app.Constant;
+import com.sdjy.book.mvp.entity.ConsumeInfo;
 import com.sdjy.book.mvp.http.FastHttp;
 import com.sdjy.book.mvp.http.OnSubscriberListener;
 import com.sdjy.book.mvp.http.base.HttpType;
+import com.sdjy.book.mvp.presenter.impl.ConsumeInfoPresenter;
+import com.sdjy.book.view.IRefresh;
 import com.sdjy.book.view.activity.BookChangeActivity;
+import com.sdjy.book.view.activity.ContributeActivity;
 import com.sdjy.book.view.activity.LoginByPhoneActivity;
 import com.sdjy.book.view.activity.SettingsActivity;
 
-public class UserFragment extends BaseFragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserFragment extends BaseFragment implements IRefresh<ConsumeInfo>,
+        SwipeRefreshLayout.OnRefreshListener, ConsumeInfoAdapter.OnItemClickListener {
 
     @SuppressLint("StaticFieldLeak")
     private static UserFragment INSTANCE;
@@ -40,8 +52,12 @@ public class UserFragment extends BaseFragment {
     private TextView nameTv;
     private TextView infoTv;
     private ConstraintLayout userInfoCl;
+    private SwipeRefreshLayout consumeInfoSr;
     private String figureurl = "";
     private SharedPreferences sharedPreferences;
+    private ConsumeInfoAdapter consumeInfoAdapter;
+    private ConsumeInfoPresenter consumeInfoPresenter = new ConsumeInfoPresenter(this);
+    private List<ConsumeInfo.ExchangeArrayBean> exchangeArrayBeanList = new ArrayList<>();
 
     public UserFragment() {
 
@@ -69,17 +85,22 @@ public class UserFragment extends BaseFragment {
         nameTv = $(view, R.id.name_tv);
         infoTv = $(view, R.id.info_tv);
         userInfoCl = $(view, R.id.userinfo_cl);
+        consumeInfoSr = $(view, R.id.consumeinfo_srl);
 
+        consumeInfoSr.setColorSchemeColors(Color.RED, Color.BLUE);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        consumeInfoAdapter = new ConsumeInfoAdapter(getContext(), exchangeArrayBeanList);
     }
 
     @Override
     protected void doBusiness(Context mContext, Activity activity) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(BookApplication.getContext());
-        figureurl = sharedPreferences.getString(Constant.PROFILE,"");
+        figureurl = sharedPreferences.getString(Constant.PROFILE, "");
+        recyclerView.setAdapter(consumeInfoAdapter);
+        consumeInfoPresenter.consume(getContext(), sharedPreferences.getString(Constant.TOKEN, ""), 1, 20);
         if (!figureurl.equals("")) {
             Uri parse = Uri.parse(figureurl);
-           // profileIv.setImageBitmap(parse);
+            // profileIv.setImageBitmap(parse);
         }
     }
 
@@ -87,7 +108,7 @@ public class UserFragment extends BaseFragment {
     protected void widgetClick(View view) {
         switch (view.getId()) {
             case R.id.comm_contri_iv:
-                startActivity(new Intent(getActivity(), LoginByPhoneActivity.class));
+                startActivity(new Intent(getActivity(), ContributeActivity.class));
                 break;
             case R.id.setting_iv:
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
@@ -118,10 +139,42 @@ public class UserFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
+        consumeInfoSr.setOnRefreshListener(this);
         commContriIv.setOnClickListener(this);
         settingIv.setOnClickListener(this);
         profileIv.setOnClickListener(this);
         userInfoCl.setOnClickListener(this);
         booksChIv.setOnClickListener(this);
+        consumeInfoAdapter.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onSuccess(ConsumeInfo consumeInfo) {
+        consumeInfoAdapter.updateListView(consumeInfo.getExchangeArray());
+    }
+
+    @Override
+    public void onFiled(String s) {
+        consumeInfoSr.setRefreshing(false);
+    }
+
+    @Override
+    public void onLoading(int process) {
+
+    }
+
+    @Override
+    public void onLoaded() {
+        consumeInfoSr.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        consumeInfoPresenter.consume(getContext(), sharedPreferences.getString(Constant.TOKEN, ""), 1, 20);
+    }
+
+    @Override
+    public void OnItemClickListener(View view, int position) {
+
     }
 }

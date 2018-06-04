@@ -11,37 +11,45 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sdjy.book.R;
-import com.sdjy.book.mvp.entity.UserDyn;
+import com.sdjy.book.mvp.entity.ContributeInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
- * Created by 李竹楠 on 2018/5/17.
- * 用户动态列表构造器
+ * Created by 李竹楠 on 2018/6/4.
+ * 贡献记录构造器
  */
 
-public class UserDynAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ContributeInfoAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context context;
+    private List<ContributeInfo.BooksArrayBean> booksArrayBeans = new ArrayList<>();
     public final static int TYPE_FOOTER = 3;//底部--往往是loading_more
     public final static int TYPE_NORMAL = 1; // 通知
     private LayoutInflater mLayoutInflater;
-    private List<UserDyn> dynList = new ArrayList<>();
-    private BooksListAdapter.OnItemClickListener itemClickListener;
+    private OnItemClickListener itemClickListener;
+
+    public ContributeInfoAdapter(Context context, List<ContributeInfo.BooksArrayBean> booksArrayBeans) {
+        this.context = context;
+        this.booksArrayBeans = booksArrayBeans;
+        mLayoutInflater = LayoutInflater.from(context);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     /**
      * 当ListView数据发生变化时,调用此方法来更新ListView
      *
-     * @param userDyns
+     * @param orgs
      */
-    public void updateListView(List<UserDyn> userDyns) {
-        if (userDyns == null) {
-            this.dynList = new ArrayList<UserDyn>();
+    public void updateListView(List<ContributeInfo.BooksArrayBean> orgs) {
+        if (orgs == null) {
+            this.booksArrayBeans = new ArrayList<ContributeInfo.BooksArrayBean>();
         } else {
-            this.dynList = userDyns;
+            this.booksArrayBeans = orgs;
         }
         notifyDataSetChanged();
     }
@@ -52,12 +60,12 @@ public class UserDynAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         View view;
         switch (viewType) {
             case TYPE_NORMAL:
-                view = mLayoutInflater.inflate(R.layout.user_dyn, parent, false);
-                holder = new UserDynAdapter.ItemViewHolder(view);
+                view = mLayoutInflater.inflate(R.layout.books_list, parent, false);
+                holder = new ItemViewHolder(view);
                 break;
             case TYPE_FOOTER:
                 view = mLayoutInflater.inflate(R.layout.recyclerview_footer, parent, false);
-                holder = new UserDynAdapter.FooterViewHolder(view);
+                holder = new FooterViewHolder(view);
                 break;
         }
         return holder;
@@ -70,12 +78,14 @@ public class UserDynAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((FooterViewHolder) holder).progressBar.setVisibility(View.INVISIBLE);
             return;
         }
-        UserDyn userDyn = dynList.get(position);
+        ContributeInfo.BooksArrayBean booksArrayBean = booksArrayBeans.get(position);
         if (holder instanceof ItemViewHolder) {
             ItemViewHolder newHolder = (ItemViewHolder) holder;
-            newHolder.user_info.setText(userDyn.getInfo());
-            newHolder.circleImageView.setImageBitmap(userDyn.getImage());
-            newHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            newHolder.bookNameTv.setText(booksArrayBean.getBookName());
+            newHolder.bookAuthorTv.setText(booksArrayBean.getAthor());
+            newHolder.bookPriceTv.setText(""+booksArrayBean.getPrice());
+            newHolder.bookPublisherTv.setText(booksArrayBean.getPublishing());
+            newHolder.bookCv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     itemClickListener.OnItemClickListener(holder.itemView, holder.getLayoutPosition());
@@ -86,8 +96,8 @@ public class UserDynAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        if (dynList != null) {
-            return dynList.size();
+        if (booksArrayBeans != null) {
+            return booksArrayBeans.size();
         } else {
             return 0;
         }
@@ -95,8 +105,8 @@ public class UserDynAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        UserDyn userDyn = dynList.get(position);
-        if (userDyn == null) {
+        ContributeInfo.BooksArrayBean booksArrayBean = booksArrayBeans.get(position);
+        if (booksArrayBean == null) {
             return TYPE_FOOTER;
         } else {
             return TYPE_NORMAL;
@@ -105,17 +115,21 @@ public class UserDynAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        CircleImageView circleImageView;
-        TextView user_info;
-        CardView cardView;
+        ImageView profileIv;
+        TextView bookNameTv, bookAuthorTv, bookPriceTv, bookPublisherTv;
+        CardView bookCv;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            circleImageView = itemView.findViewById(R.id.profile_iv);
-            user_info = itemView.findViewById(R.id.info_tv);
-            cardView = itemView.findViewById(R.id.cv);
+            bookCv = itemView.findViewById(R.id.book_cv);
+            bookNameTv = itemView.findViewById(R.id.book_name_tv);
+            bookAuthorTv = itemView.findViewById(R.id.author_tv);
+            bookPriceTv = itemView.findViewById(R.id.price_tv);
+            bookPublisherTv = itemView.findViewById(R.id.publisher_tv);
+            profileIv = itemView.findViewById(R.id.profile_iv);
         }
     }
+
 
     class FooterViewHolder extends RecyclerView.ViewHolder {
         ProgressBar progressBar;

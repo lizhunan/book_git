@@ -26,7 +26,7 @@ import java.util.List;
  * 获取所有书籍列表
  */
 
-public class BooksInfoPresenter implements IBase<ResponseHttp<String>> {
+public class BooksInfoPresenter implements IBase<ResponseHttp<BooksInfo>> {
 
     private BooksInfoModel booksInfoModel;
     private IRefresh<BooksInfo> iRefresh;
@@ -63,11 +63,14 @@ public class BooksInfoPresenter implements IBase<ResponseHttp<String>> {
     }
 
     @Override
-    public void onSuccess(ResponseHttp<String> booksInfoResponseHttp) {
-        BooksInfo booksInfo = new BooksInfo();
+    public void onSuccess(ResponseHttp<BooksInfo> booksInfoResponseHttp) {
+        //新方法
+        iRefresh.onSuccess(booksInfoResponseHttp.getResultData());
+        //旧方法
+        /* BooksInfo booksInfo = new BooksInfo();
         List<BooksInfo.BooksArrayBean> beans = new ArrayList<>();
         try {
-            JSONObject jsonObject = new JSONObject(booksInfoResponseHttp.getResultData());
+            JSONObject jsonObject = new JSONObject(booksInfoResponseHttp.getResultData().toString());
             String booksJson = jsonObject.getString("booksArray");
             JSONArray jsonArray = new JSONArray(booksJson);
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -79,7 +82,7 @@ public class BooksInfoPresenter implements IBase<ResponseHttp<String>> {
             iRefresh.onSuccess(booksInfo);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override

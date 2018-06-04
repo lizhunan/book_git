@@ -10,36 +10,33 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.sdjy.book.R;
-import com.sdjy.book.adapter.BooksListAdapter;
+import com.sdjy.book.adapter.ContributeInfoAdapter;
 import com.sdjy.book.app.BaseActivity;
 import com.sdjy.book.app.BookApplication;
 import com.sdjy.book.app.Constant;
-import com.sdjy.book.mvp.entity.BooksInfo;
-import com.sdjy.book.mvp.presenter.impl.BooksInfoPresenter;
+import com.sdjy.book.mvp.entity.ContributeInfo;
+import com.sdjy.book.mvp.http.base.ResponseHttp;
+import com.sdjy.book.mvp.presenter.impl.ContributePresenter;
 import com.sdjy.book.view.IRefresh;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookChangeActivity extends BaseActivity implements IRefresh<BooksInfo>,
-        SwipeRefreshLayout.OnRefreshListener, BooksListAdapter.OnItemClickListener {
+public class ContributeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,
+        IRefresh<ContributeInfo>, ContributeInfoAdapter.OnItemClickListener {
 
     private Toolbar toolbar;
     private TextView titleTv;
     private RecyclerView booksListRv;
-    private BooksListAdapter booksListAdapter;
     private SwipeRefreshLayout booksSrl;
     private SharedPreferences sharedPreferences;
-    private List<BooksInfo.BooksArrayBean> booksArrayBeans = new ArrayList<>();
-    private BooksInfoPresenter booksInfoPresenter = new BooksInfoPresenter(this);
+    private ContributeInfoAdapter contributeInfoAdapter;
+    private List<ContributeInfo.BooksArrayBean> booksArrayBeans = new ArrayList<>();
+    private ContributePresenter contributePresenter = new ContributePresenter(this);
 
     @Override
     protected void initParms(Bundle parms) {
@@ -48,7 +45,7 @@ public class BookChangeActivity extends BaseActivity implements IRefresh<BooksIn
 
     @Override
     protected int bindLayout() {
-        return R.layout.activity_book_change;
+        return R.layout.activity_contribute;
     }
 
     @Override
@@ -62,18 +59,18 @@ public class BookChangeActivity extends BaseActivity implements IRefresh<BooksIn
         * */
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle("");
-        titleTv.setText(getResources().getString(R.string.book_change));
+        titleTv.setText(getResources().getString(R.string.community_contri));
         setSupportActionBar(toolbar);
         booksListRv.setLayoutManager(new LinearLayoutManager(this));
         booksSrl.setColorSchemeColors(Color.RED, Color.BLUE);
-        booksListAdapter = new BooksListAdapter(this, booksArrayBeans);
+        contributeInfoAdapter = new ContributeInfoAdapter(this, booksArrayBeans);
     }
 
     @Override
     protected void doBusiness(Context mContext) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(BookApplication.getContext());
-        booksListRv.setAdapter(booksListAdapter);
-        booksInfoPresenter.getInfo(BookChangeActivity.this, sharedPreferences.getString(Constant.TOKEN, ""), 1, 20);
+        booksListRv.setAdapter(contributeInfoAdapter);
+        contributePresenter.contributeInfo(this, sharedPreferences.getString(Constant.TOKEN, ""), 1, 20);
     }
 
     @Override
@@ -83,34 +80,22 @@ public class BookChangeActivity extends BaseActivity implements IRefresh<BooksIn
 
     @Override
     protected void setListener() {
+        contributeInfoAdapter.setOnItemClickListener(this);
         booksSrl.setOnRefreshListener(this);
-        booksListAdapter.setOnItemClickListener(this);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.order, menu);
-        return true;
+    public void onRefresh() {
+        contributePresenter.contributeInfo(this, sharedPreferences.getString(Constant.TOKEN, ""), 1, 20);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.info_menu:
-                break;
-        }
-        return true;
-    }
-
-    @Override
-    public void onSuccess(BooksInfo info) {
-        booksListAdapter.updateListView(info.getBooksArray());
+    public void onSuccess(ContributeInfo o) {
+        contributeInfoAdapter.updateListView(o.getBooksArray());
     }
 
     @Override
     public void onFiled(String s) {
-
         booksSrl.setRefreshing(false);
     }
 
@@ -122,11 +107,6 @@ public class BookChangeActivity extends BaseActivity implements IRefresh<BooksIn
     @Override
     public void onLoaded() {
         booksSrl.setRefreshing(false);
-    }
-
-    @Override
-    public void onRefresh() {
-        booksInfoPresenter.getInfo(BookChangeActivity.this, sharedPreferences.getString(Constant.TOKEN, ""), 1, 20);
     }
 
     @Override
