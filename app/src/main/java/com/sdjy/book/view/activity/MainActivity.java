@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mapFragment = MapFragment.newInstance();
         scanningFragment = ScanningFragment.newInstance();
         userFragment = UserFragment.newInstance();
-        switchFragment(scanningFragment, R.id.content).commit();
+        switchFragment(mapFragment, R.id.content).commit();
     }
 
     @Override
